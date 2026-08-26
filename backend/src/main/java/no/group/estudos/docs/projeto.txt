@@ -1,0 +1,11 @@
+É um projeto de agenda de contatos.
+Onde será separado por usuário, ou seja cada um tera sua agenda.
+Então será necessário um login e utilização JWT ou Auth.
+Cada usuario terá uma lista de contatos.
+
+Funcionalidades:
+- Busca por nome
+- Deletar contato
+- Editar contato
+- Salvar contato
+- Adicionar foto
