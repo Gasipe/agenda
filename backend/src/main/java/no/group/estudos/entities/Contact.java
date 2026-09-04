@@ -25,6 +25,10 @@ public class Contact {
     private LocalDate createdDate;
     private LocalDate updatedDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @PrePersist
     public void onCreate() {
         this.createdDate = LocalDate.now();
