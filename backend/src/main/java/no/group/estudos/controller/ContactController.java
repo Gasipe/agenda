@@ -25,19 +25,18 @@ import java.util.UUID;
 
 public class ContactController {
     private final ContactService service;
-    private final ContactRepository respository;
 
     @GetMapping
-    public List<Contact> findAll(Authentication authenticaton) {
+    public ResponseEntity<List<ContactResponseDTO>> findAll(Authentication authenticaton) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authenticaton.getPrincipal();
-        UUID userId = userDetails.getUser().getId();
-        return respository.findByUserId(userId);
+        List<ContactResponseDTO> contacts = service.findAllByUser(userDetails.getUser().getId());
+        return ResponseEntity.ok(contacts);
     }
 
     @PostMapping
-    public Contact createContact(@RequestBody Contact contact, Authentication authenticaton) {
-        User user = ((UserDetailsImpl) authenticaton.getPrincipal()).getUser();
-        contact.setUser(user);
-        return respository.save(contact);
+    public ResponseEntity<ContactResponseDTO> createContact(@RequestBody ContactRequestDTO requestDTO, Authentication authenticaton) {
+        UserDetailsImpl userDetailsImpl = ((UserDetailsImpl) authenticaton.getPrincipal());
+        ContactResponseDTO response = service.save(requestDTO, userDetailsImpl.getUser().getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
